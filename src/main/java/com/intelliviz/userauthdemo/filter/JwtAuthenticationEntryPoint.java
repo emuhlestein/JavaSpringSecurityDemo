@@ -15,15 +15,15 @@ import java.io.OutputStream;
 
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 @Component
 public class JwtAuthenticationEntryPoint extends Http403ForbiddenEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException arg2) throws IOException {
-        HttpResponse resp = new HttpResponse(UNAUTHORIZED.value(), UNAUTHORIZED,
-                UNAUTHORIZED.getReasonPhrase().toUpperCase(), SecurityConstant.FORBIDDEN_MESSAGE);
+        HttpResponse resp = new HttpResponse(FORBIDDEN.value(), FORBIDDEN, FORBIDDEN.getReasonPhrase().toUpperCase(), SecurityConstant.FORBIDDEN_MESSAGE);
         response.setContentType(APPLICATION_JSON_VALUE);
-        response.setStatus(UNAUTHORIZED.value());
+        response.setStatus(FORBIDDEN.value());
         OutputStream outputStream = response.getOutputStream();
         ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(outputStream, resp);

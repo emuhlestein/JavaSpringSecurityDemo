@@ -2,11 +2,8 @@ package com.intelliviz.userauthdemo.filter;
 
 import com.intelliviz.userauthdemo.constant.SecurityConstant;
 import com.intelliviz.userauthdemo.utility.JsonWebTokenProvider;
-import org.apache.catalina.security.SecurityClassLoad;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
