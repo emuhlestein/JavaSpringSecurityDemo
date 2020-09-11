@@ -11,7 +11,6 @@ import javax.transaction.Transactional;
 
 @Repository
 @Transactional
-@Qualifier("UserDetailService")
 public class UserRepository {
     @Autowired
     EntityManager em;
