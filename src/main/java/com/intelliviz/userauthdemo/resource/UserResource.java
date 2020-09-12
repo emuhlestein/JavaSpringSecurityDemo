@@ -1,5 +1,6 @@
 package com.intelliviz.userauthdemo.resource;
 
+import com.intelliviz.userauthdemo.exception.domain.ExceptionHandling;
 import com.intelliviz.userauthdemo.models.User;
 import com.intelliviz.userauthdemo.models.UserDao;
 import com.intelliviz.userauthdemo.services.UserService;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping(value = "/user")
-public class UserResource {
+public class UserResource extends ExceptionHandling {
     @Autowired
     private UserService userService;
 
