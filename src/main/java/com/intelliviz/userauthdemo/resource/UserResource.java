@@ -1,5 +1,6 @@
 package com.intelliviz.userauthdemo.resource;
 
+import com.intelliviz.userauthdemo.exception.domain.EmailExistException;
 import com.intelliviz.userauthdemo.exception.domain.ExceptionHandling;
 import com.intelliviz.userauthdemo.models.User;
 import com.intelliviz.userauthdemo.models.UserDao;
@@ -12,12 +13,17 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(path = {"/", "/user"}) // add "/" so the /error can be overridden.
 public class UserResource extends ExceptionHandling {
     @Autowired
     private UserService userService;
 
     public UserResource() {
+    }
+
+    @GetMapping("/login")
+    public void login() throws EmailExistException {
+        throw new EmailExistException("This email address is not available");
     }
 
     @GetMapping("")
