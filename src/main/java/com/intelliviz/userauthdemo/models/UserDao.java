@@ -40,9 +40,9 @@ public class UserDao {
     private LocalDateTime lastLoginDateDisplay;
 
     @Column(name = "join_date", nullable = false)
-    private LocalDate joinDate;
+    private LocalDateTime joinDate;
 
-    private String[] roles; // ROLE_USER, ROLE_ADMIN
+    private String role; // ROLE_USER, ROLE_ADMIN
     private String[] authorities; // read, create, ...
 
     @Column(name = "is_active", nullable = false)
@@ -51,7 +51,7 @@ public class UserDao {
     @Column(name = "is_not_locked", nullable = false)
     private boolean isNotLocked;
 
-    protected UserDao() {
+    public UserDao() {
     }
 
     public UserDao(String userId, String firstName, String lastName, String userName,
@@ -67,8 +67,8 @@ public class UserDao {
 
     public UserDao(String userId, String firstName, String lastName,
                    String password, String email, String profileImageUrl,
-                   LocalDateTime lastLoginDate, LocalDateTime lastLoginDateDisplay, LocalDate joinDate,
-                   String[] roles, String[] authorities, boolean isActive, boolean isLocked) {
+                   LocalDateTime lastLoginDate, LocalDateTime lastLoginDateDisplay, LocalDateTime joinDate,
+                   String role, String[] authorities, boolean isActive, boolean isLocked) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -78,7 +78,7 @@ public class UserDao {
         this.lastLoginDate = lastLoginDate;
         this.lastLoginDateDisplay = lastLoginDateDisplay;
         this.joinDate = joinDate;
-        this.roles = roles;
+        this.role = role;
         this.authorities = authorities;
         this.isActive = isActive;
         this.isNotLocked = isLocked;
@@ -160,20 +160,20 @@ public class UserDao {
         this.lastLoginDateDisplay = lastLoginDateDisplay;
     }
 
-    public LocalDate getJoinDate() {
+    public LocalDateTime getJoinDate() {
         return joinDate;
     }
 
-    public void setJoinDate(LocalDate joinDate) {
+    public void setJoinDate(LocalDateTime joinDate) {
         this.joinDate = joinDate;
     }
 
-    public String[] getRoles() {
-        return roles;
+    public String getRole() {
+        return role;
     }
 
-    public void setRoles(String[] roles) {
-        this.roles = roles;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String[] getAuthorities() {
@@ -213,7 +213,7 @@ public class UserDao {
                 ", lastLoginDate=" + lastLoginDate +
                 ", lastLoginDateDisplay=" + lastLoginDateDisplay +
                 ", joinDate=" + joinDate +
-                ", roles=" + Arrays.toString(roles) +
+                ", role=" + role +
                 ", authorities=" + Arrays.toString(authorities) +
                 ", isActive=" + isActive +
                 ", isLocked=" + isNotLocked +

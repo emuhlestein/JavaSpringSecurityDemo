@@ -2,24 +2,42 @@ package com.intelliviz.userauthdemo.resource;
 
 import com.intelliviz.userauthdemo.exception.domain.EmailExistException;
 import com.intelliviz.userauthdemo.exception.domain.ExceptionHandling;
+import com.intelliviz.userauthdemo.exception.domain.UserNotFoundException;
+import com.intelliviz.userauthdemo.exception.domain.UsernameExistException;
 import com.intelliviz.userauthdemo.models.User;
 import com.intelliviz.userauthdemo.models.UserDao;
 import com.intelliviz.userauthdemo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.InvalidParameterException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Controller("/")
+@Controller()
 @RequestMapping(path = {"/", "/user"}) // add "/" so the /error can be overridden.
 public class UserResource extends ExceptionHandling {
-    @Autowired
     private UserService userService;
 
-    public UserResource() {
+    @Autowired
+    public UserResource(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping("/register")
+    public String showRegisterPage(Model model) {
+        model.addAttribute("user", new User());
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String register(@RequestBody User user, Model model) throws UserNotFoundException, UsernameExistException, EmailExistException {
+        UserDao loginUserDao = this.userService.register(user.getFirstName(), user.getLastName(), user.getUserName(), user.getEmail());
+        model.addAttribute("user", loginUserDao);
+        return "register";
     }
 
     @RequestMapping("/home")
@@ -30,12 +48,6 @@ public class UserResource extends ExceptionHandling {
     @RequestMapping("/login")
     public String login() throws EmailExistException {
         throw new EmailExistException("This email address is not available");
-    }
-
-    @RequestMapping("/register")
-    public String register() {
-        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-        return "ed";
     }
 
     @RequestMapping("/ed")
@@ -97,13 +109,13 @@ public class UserResource extends ExceptionHandling {
 
     private UserDao createNewEntity(User user) {
         UserDao userDao = convertUserToUserDao(user);
-        userDao.setJoinDate(LocalDate.now());
+        userDao.setJoinDate(LocalDateTime.now());
         userDao.setLastLoginDate(LocalDateTime.now());
         userDao.setLastLoginDateDisplay(LocalDateTime.now());
         userDao.setActive(true);
         userDao.setNotLocked(false);
         userDao.setAuthorities(new String[0]);
-        userDao.setRoles(new String[0]);
+        userDao.setRole("");
 
         return userDao;
     }

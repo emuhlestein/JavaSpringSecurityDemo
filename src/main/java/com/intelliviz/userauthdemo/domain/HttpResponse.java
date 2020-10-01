@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import java.time.LocalDateTime;
 
 public class HttpResponse {
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "MM-dd-yyyy HH:mm:ss")
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime timeStamp;
