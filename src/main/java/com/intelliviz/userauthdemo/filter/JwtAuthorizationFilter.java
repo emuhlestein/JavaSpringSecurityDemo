@@ -1,7 +1,7 @@
 package com.intelliviz.userauthdemo.filter;
 
 import com.intelliviz.userauthdemo.constant.SecurityConstant;
-import com.intelliviz.userauthdemo.utility.JsonWebTokenProvider;
+import com.intelliviz.userauthdemo.utility.JwtTokenProvider;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -17,12 +17,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * A filter to fire once per request.
+ * The OPTIONS method is sent before every request. It gets information about the server: do you accept certain headers, ...
+ */
 @Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
-    private JsonWebTokenProvider tokenProvider;
+    private JwtTokenProvider tokenProvider;
 
-    public JwtAuthorizationFilter(JsonWebTokenProvider tokenProvider) {
+    public JwtAuthorizationFilter(JwtTokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;
     }
 
@@ -31,6 +35,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         if(request.getMethod().equalsIgnoreCase(SecurityConstant.OPTIONS_HTTP_METHOD)) {
             response.setStatus(HttpStatus.OK.value());
         } else {
+            // read the Authorization request header
             String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
             if(authorizationHeader == null || !authorizationHeader.startsWith(SecurityConstant.TOKEN_PREFIX)) {
                 filterChain.doFilter(request, response);
@@ -43,7 +48,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 Authentication authentication = tokenProvider.getAuthentication(username, authorities, request);
                 SecurityContextHolder.getContext().setAuthentication(authentication); // user is authenticated
             } else {
-                SecurityContextHolder.clearContext();
+                SecurityContextHolder.clearContext(); // critical
             }
         }
         filterChain.doFilter(request, response);

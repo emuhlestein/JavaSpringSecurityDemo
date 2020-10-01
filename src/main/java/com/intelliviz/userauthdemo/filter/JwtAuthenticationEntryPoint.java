@@ -3,7 +3,6 @@ package com.intelliviz.userauthdemo.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intelliviz.userauthdemo.constant.SecurityConstant;
 import com.intelliviz.userauthdemo.domain.HttpResponse;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.stereotype.Component;
@@ -13,10 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 
+/**
+ * Create forbidden response to unauthenicated user and send to client.
+ */
 @Component
 public class JwtAuthenticationEntryPoint extends Http403ForbiddenEntryPoint {
     @Override

@@ -16,13 +16,13 @@ public class UserRepository {
     EntityManager em;
 
     public UserDao findUserByUsername(String username) {
-        TypedQuery<UserDao> query = em.createQuery("SELECT u FROM USER u WHERE c.username = :username", UserDao.class);
+        TypedQuery<UserDao> query = em.createQuery("SELECT u FROM USER u WHERE u.username = :username", UserDao.class);
         return query.setParameter("username", username).getSingleResult();
     }
 
     public UserDao findUserByEmail(String email) {
-        TypedQuery<UserDao> query = em.createQuery("SELECT u FROM USER u WHERE c.email = :email", UserDao.class);
-        return query.setParameter("username", email).getSingleResult();
+        TypedQuery<UserDao> query = em.createQuery("SELECT u FROM USER u WHERE u.email = :email", UserDao.class);
+        return query.setParameter("email", email).getSingleResult();
     }
 
     public UserDao findById(Long id) {
