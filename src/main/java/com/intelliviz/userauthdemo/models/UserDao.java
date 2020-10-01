@@ -11,7 +11,8 @@ public class UserDao {
     public static final String TABLE_NAME="user";
 
     @Id
-    @GeneratedValue
+    @GeneratedValue // Auto strategy is the default
+    @Column(nullable = false, updatable = false)
     private Long id;
 
     @Column(name = "userid", nullable = false, unique = true)
@@ -41,8 +42,8 @@ public class UserDao {
     @Column(name = "join_date", nullable = false)
     private LocalDate joinDate;
 
-    private String[] roles;
-    private String[] authorities;
+    private String[] roles; // ROLE_USER, ROLE_ADMIN
+    private String[] authorities; // read, create, ...
 
     @Column(name = "is_active", nullable = false)
     private boolean isActive;

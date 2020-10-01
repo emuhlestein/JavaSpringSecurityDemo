@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-class JsonWebTokenProvider {
+public class JsonWebTokenProvider {
     @Value("${jwt.secret}")
     private String secret; // probably should put this in application config file; using env var; should not be saved in git
 

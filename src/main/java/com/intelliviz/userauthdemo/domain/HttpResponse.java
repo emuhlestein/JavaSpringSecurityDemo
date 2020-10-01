@@ -15,7 +15,7 @@ public class HttpResponse {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime timeStamp;
 
-    private int httpStatusCode;
+    private int httpStatusCode; // 200, 201, 400, 500, ...
     private HttpStatus httpStatus;
     private String reason;
     private String message;

@@ -6,13 +6,14 @@ import com.intelliviz.userauthdemo.models.User;
 import com.intelliviz.userauthdemo.models.UserDao;
 import com.intelliviz.userauthdemo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.InvalidParameterException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@RestController
+@Controller("/")
 @RequestMapping(path = {"/", "/user"}) // add "/" so the /error can be overridden.
 public class UserResource extends ExceptionHandling {
     @Autowired
@@ -21,21 +22,34 @@ public class UserResource extends ExceptionHandling {
     public UserResource() {
     }
 
-    @GetMapping("/login")
-    public void login() throws EmailExistException {
+    @RequestMapping("/home")
+    public String showLoginPage() {
+        return "user";
+    }
+
+    @RequestMapping("/login")
+    public String login() throws EmailExistException {
         throw new EmailExistException("This email address is not available");
     }
 
-    @GetMapping("")
-    public String getUser() {
-        return "Ed Muhlestein";
+    @RequestMapping("/register")
+    public String register() {
+        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+        return "ed";
     }
 
-    @GetMapping("/{id}")
-    public User getUserById(@PathVariable long id) {
-        System.out.println("id: " + id);
-        return convertToUser(userService.findById(id));
+    @RequestMapping("/ed")
+    public String getUser() {
+        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+        return "index";
     }
+
+
+//    @GetMapping("/{id}")
+//    public User getUserById(@PathVariable long id) {
+//        System.out.println("id: " + id);
+//        return convertToUser(userService.findById(id));
+//    }
 
     @PostMapping("/")
     public User addNewUser(@RequestBody User insertUser) {
