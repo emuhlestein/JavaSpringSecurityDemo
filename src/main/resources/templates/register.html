@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html land="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Please Login to family resource management</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #3e3e3e;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <form id="form" class="form-signin" action="*" th:action="@{/register}" th:object="${user}" method="post">
+        <h2 class="text-center">Register User</h2>
+        <div class="form-group">
+            <p><font color="red"><th:block th:text="${errorMessage}">errorMessage</th:block></font></p>
+        </div>
+        <div class="form-group mt-3">
+            <label for="firstName" class="sr-only">FirstName</label>
+            <input type="text" th:field="*{firstName}" id="firstName" class="form-control" placeholder="First Name" required autofocus>
+        </div>
+        <div class="form-group">
+            <label for="lastName" class="sr-only">LastName</label>
+            <input type="text" th:field="*{lastName}"id="lastName"  class="form-control" placeholder="Last Name" required>
+        </div>
+        <div class="form-group">
+            <label for="userName" class="sr-only">UserName</label>
+            <input type="text" th:field="*{userName}" id="userName" class="form-control" placeholder="Username" required>
+        </div>
+        <div class="form-group">
+            <label for="email" class="sr-only">Email</label>
+            <input type="email" th:field="*{email}" id="email" class="form-control" placeholder="Email" required>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Create User</button>
+    </form>
+</div>
+</body></html>
