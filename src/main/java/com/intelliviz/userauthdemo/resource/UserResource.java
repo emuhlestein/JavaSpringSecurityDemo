@@ -34,9 +34,9 @@ public class UserResource extends ExceptionHandling {
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute("user") User user, Model model) throws UserNotFoundException, UsernameExistException, EmailExistException {
+    public String register(@ModelAttribute("user") User user) throws UserNotFoundException, UsernameExistException, EmailExistException {
         UserDao loginUserDao = this.userService.register(user.getFirstName(), user.getLastName(), user.getUserName(), user.getEmail());
-        model.addAttribute("user", user);
+//        model.addAttribute("user", user);
         return "welcome";
     }
 

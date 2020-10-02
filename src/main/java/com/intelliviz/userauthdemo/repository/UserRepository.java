@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
@@ -16,13 +17,19 @@ public class UserRepository {
     EntityManager em;
 
     public UserDao findUserByUsername(String username) {
-        TypedQuery<UserDao> query = em.createQuery("SELECT u FROM USER u WHERE u.username = :username", UserDao.class);
-        return query.setParameter("username", username).getSingleResult();
+//        Query query = em.createNativeQuery("SELECT u FROM user u WHERE u.user_name = :username", UserDao.class);
+//        query.setParameter("username", username);
+//        Object obj = query.getSingleResult();
+//        return (UserDao) query.getSingleResult();
+        TypedQuery<UserDao> query1 = em.createQuery("SELECT u FROM UserDao u WHERE u.userName = :username", UserDao.class);
+        query1.setParameter("username", username);
+        return (UserDao) JpaResultHelper.getSingleResult(query1);
     }
 
     public UserDao findUserByEmail(String email) {
-        TypedQuery<UserDao> query = em.createQuery("SELECT u FROM USER u WHERE u.email = :email", UserDao.class);
-        return query.setParameter("email", email).getSingleResult();
+        TypedQuery<UserDao> query = em.createQuery("SELECT u FROM UserDao u WHERE u.email = :email", UserDao.class);
+        query.setParameter("email", email);
+        return (UserDao) JpaResultHelper.getSingleResult(query);
     }
 
     public UserDao findById(Long id) {
